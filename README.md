@@ -157,4 +157,4 @@ clusters:
 
 The greet.pb file is required by the envoy transcoder to convert the REST JSON request to a gRPC request. This file was generated with the command.
 
-`\src\GrpcGreeter\Protos> protoc -I. -I../../Protos --include_imports --include_source_info --descriptor_set_out=greet.pb *.proto`# grpc-envoy-lpk-test
+`\src\GrpcGreeter\Protos> protoc -I. -I../../Protos --include_imports --include_source_info --descriptor_set_out=greet.pb *.proto`
