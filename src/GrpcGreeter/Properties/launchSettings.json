@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "GrpcGreeter": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://+:8100"
+    },
+    "Bridge to Kubernetes": {
+      "commandName": "AzureDevSpacesLocal",
+      "resourceGroup": "nvw-ppdev-ase-rg",
+      "aksName": "nvw-ppdev-ase-lpk",
+      "subscriptionId": "f586a1d5-5cb2-4e59-b937-1a8b5f455405"
+    }
+  }
+}

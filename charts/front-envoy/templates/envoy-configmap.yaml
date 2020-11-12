@@ -28,7 +28,7 @@ data:
                       request_headers_to_add:
                       - header:
                           key: "kubernetes-route-as"
-                          value: "nicovanh-9699"
+                          value: "GENERATED_NAME"
                         append: true
                       route: { cluster: greet-envoy, timeout: 120s }  
                 http_filters:
