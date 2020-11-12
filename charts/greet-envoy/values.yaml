@@ -1,0 +1,14 @@
+name: greet-api-envoy
+
+replicaCount: 1
+revisionHistoryLimit: 1
+
+
+protos:
+  - greet.pb # we need to copy in the pb file 
+
+
+envoy:
+  version: v1.14-latest
+  args: |
+    ["-l", "debug", "-c", "/config/envoy/envoy.yaml", "--service-cluster", "greet-proxy", "--service-node", "greet-envoy", "--log-format", "[METADATA][%Y-%m-%d %T.%e][%t][%l][%n] %v"]

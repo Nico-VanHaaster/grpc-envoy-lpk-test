@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      annotations:
+        #use a checksum hash to determine if config has changed
+        checksum/config: {{ template "common.envoyconfigsha" . }}
+      labels:
+        app: {{ .Values.name }}
+    spec:  
+      containers:
+        - name: {{ .Values.name }}
+          image: envoyproxy/envoy:{{ .Values.envoy.version }}
+          command: [ "/usr/local/bin/envoy" ]
+          args: {{ .Values.envoy.args }}
+          ports:
+          - containerPort: 8000
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /config/envoy
+              readOnly: true
+            - name: proto-config
+              mountPath: /config/protos
+              readOnly: true
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: {{ .Values.name }}-config
+        - name: proto-config
+          configMap:
+            name: {{ .Values.name }}-proto-config

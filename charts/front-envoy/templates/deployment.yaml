@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+      annotations:
+        checksum/config: {{ template "common.envoyconfigsha" . }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: envoyproxy/envoy:{{ .Values.envoy.imageVersion }}
+          command: [ "/usr/local/bin/envoy" ]
+          args: {{ .Values.envoy.args }}
+          ports:
+          - containerPort: {{ .Values.ingress.port }}
+          volumeMounts:
+            - name: {{ .Values.name }}-config
+              mountPath: /config/envoy
+              readOnly: true
+
+      volumes:
+        - name: {{ .Values.name }}-config
+          configMap:
+            name: {{ .Values.name }}-config
+
+      terminationGracePeriodSeconds: 81

@@ -1,0 +1,18 @@
+# Default values for front-envoy-p2.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1 # sets the replica count for the web api
+revisionHistoryLimit: 0 # sets the maximum amount of revisions to maintain
+
+name: front-envoy # sets the root name of the release
+
+ingress:
+  enabled: true
+  host: greet.d.parliamentdev.io
+  port: 8080
+
+envoy:
+  imageVersion: v1.14-latest
+  args: |
+    ["-l", "debug", "-c", "/config/envoy/envoy.yaml", "--service-cluster", "front-proxy", "--service-node", "front-envoy", "--log-format", "[METADATA][%Y-%m-%d %T.%e][%t][%l][%n] %v"]

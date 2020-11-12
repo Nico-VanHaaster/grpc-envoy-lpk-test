@@ -1,0 +1,10 @@
+
+name: greet-api
+replicaCount: 1
+revisionHistoryLimit: 1
+
+#Image details
+imageRegistry: <acr registry>.azurecr.io
+imageName: greet-api
+imageTag: latest
+imagePullSecret: mysecretname
