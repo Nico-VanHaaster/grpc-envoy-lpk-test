@@ -9,7 +9,7 @@ name: front-envoy # sets the root name of the release
 
 ingress:
   enabled: true
-  host: greet.d.parliamentdev.io
+  host: host.example.com
   port: 8080
 
 envoy:
